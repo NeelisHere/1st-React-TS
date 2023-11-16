@@ -1,27 +1,14 @@
-import { useTheme } from "./components/Providers";
-// import { Dispatch, SetStateAction } from 'react'
+// import ToggleTheme from "./components/ToggleTheme";
 
-// type ThemeType = 'light' | 'dark'
-// interface ThemeContextProviderProps {
-// 	theme: ThemeType,
-// 	setTheme: Dispatch<SetStateAction<ThemeType>>
-// }
+import Counter from "./components/Counter";
+
 
 const App = () => {
 	
-	const { theme, setTheme } = useTheme()
-
 	return (
 		<>
-			<button 
-				onClick={() => {
-					setTheme((prev) => prev === 'dark'? 'light' : 'dark')
-				}}
-			>
-				Toggle
-			</button>
-
-			<div>{theme}</div>
+			{/* <ToggleTheme /> */}
+			<Counter />
 		</>
 	);
 };
