@@ -1,19 +1,12 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
-
 const initialState: StateType = {
     tasks: [
-        { id: '1', title: 'test-1', isCompleted: false},
-        { id: '2', title: 'test-2', isCompleted: false},
-        { id: '3', title: 'test-3', isCompleted: false},
+        // { id: '1', title: 'test-1', isCompleted: false},
+        // { id: '2', title: 'test-2', isCompleted: false},
+        // { id: '3', title: 'test-3', isCompleted: false},
     ]
 }
-
-// const addTask: CaseReducer<StateType, PayloadAction<TaskType>> = (state, action) => {
-//     state.tasks.push(action.payload)
-//     return state
-// }
-
 
 const taskSlice = createSlice({
     name: 'tasks',

@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react"
 import { useSelector } from 'react-redux'
+import Task from "./Task"
 
 const AllTasks = () => {
     const { tasks: tasksFromRedux } = useSelector((state: UseSelectorStateType) => state.tasks)
@@ -12,8 +13,9 @@ const AllTasks = () => {
     return tasks? 
     (
         <div>
+            <h1 style={{ textAlign: 'center' }}>All Tasks</h1>
             {
-                tasks.map((task) => <div>{ task.title }</div>)
+                tasks.map((task) => <Task key={task.id} task={task} />)
             }
         </div>
     ) 
