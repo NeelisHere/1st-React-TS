@@ -1,11 +1,7 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 const initialState: StateType = {
-    tasks: [
-        // { id: '1', title: 'test-1', isCompleted: false},
-        // { id: '2', title: 'test-2', isCompleted: false},
-        // { id: '3', title: 'test-3', isCompleted: false},
-    ]
+    tasks: []
 }
 
 const taskSlice = createSlice({
@@ -15,12 +11,23 @@ const taskSlice = createSlice({
         addTask: (state: StateType, action: PayloadAction<TaskType>) => {
             state.tasks.push(action.payload)
             return state
-        }
-        // editTask: (state, action: PayloadAction<TaskType>) => {},
-        // deleteTask: (state, action: PayloadAction<TaskType>) => {},
+        },
+        editTask: (state: StateType, action: PayloadAction<TaskType>) => {
+            state.tasks.forEach((task) => {
+                if (task.id === action.payload.id) {
+                    task.title = action.payload.title
+                    task.isCompleted = action.payload.isCompleted
+                }
+            })
+            return state
+        },
+        deleteTask: (state: StateType, action: PayloadAction<string>) => ({
+            ...state.tasks,
+            tasks: state.tasks.filter((task) => task.id !== action.payload)
+        }),
 
     }
 })
 
-export const { addTask } = taskSlice.actions
+export const { addTask, editTask, deleteTask } = taskSlice.actions
 export default taskSlice

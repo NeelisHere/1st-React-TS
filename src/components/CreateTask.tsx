@@ -2,10 +2,12 @@ import { useState, useMemo, FormEvent } from "react"
 import { nanoid } from 'nanoid'
 import { addTask } from "../slices/taskSlice"
 import { useDispatch } from 'react-redux';
+import { useNavigate } from "react-router-dom";
 
 const CreateTask = () => {
     const [title, setTitle] = useState<string>('')
     const dispatch = useDispatch()
+    const navigate = useNavigate()
 
     const formStyle = useMemo(() => ({
         width: '300px',
@@ -23,6 +25,7 @@ const CreateTask = () => {
         }
         // console.log(payload)
         dispatch(addTask(payload))
+        navigate('/')
     }
 
     return (
