@@ -1,16 +1,12 @@
-import { useEffect, useState, useMemo } from "react"
+import { useEffect, useMemo, useState } from "react"
+// import toast from "react-hot-toast"
 import { useSelector } from 'react-redux'
 import Task from "./Task"
-import authAPI from "../utils/authAPI"
-import toast from "react-hot-toast"
-import { useNavigate } from 'react-router-dom'
-
 
 const AllTasks = () => {
     const { tasks: tasksFromRedux } = useSelector((state: UseSelectorStateType) => state.tasks)
     const [tasks, setTasks] = useState<TaskType[]|null>(null)
-    const [loading, setLoading] = useState<boolean>(false)
-    const navigate = useNavigate()
+    // const [loading, setLoading] = useState<boolean>(false)
 
     useEffect(() => {
         setTasks(tasksFromRedux);
@@ -26,29 +22,11 @@ const AllTasks = () => {
         cursor: 'pointer'
     }), [])
 
-    const handleLogout = async () => {
-        try {
-            setLoading(true)
-            const { data } = await authAPI.logoutAPI()
-            toast.success(data.message)
-            navigate('/auth/login')
-        } catch (error) {
-            console.log(error)
-            toast.error('Error logging out!')
-        } finally {
-            setLoading(false)
-        }
-    }
-
     return tasks? 
     (
         <div>
             <h1 style={{ textAlign: 'center' }}>All Tasks</h1>
             <div style={taskCardStyle}>
-                <div>
-                    <p>{ loading? <>loading...</> : null }</p>
-                    <button onClick={handleLogout}>Logout</button>
-                </div>
                 {
                     tasks.map((task) => <Task key={task.id} task={task} />)
                 }

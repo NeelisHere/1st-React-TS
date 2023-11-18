@@ -5,27 +5,41 @@ import EditTask from "./components/EditTask";
 import Login from "./components/Login";
 import Register from "./components/Register";
 import { Toaster } from "react-hot-toast";
+import RootLayout from "./layouts/RootLayout";
+import RootAuthLayout from "./layouts/RootAuthLayout";
 
 const router = createBrowserRouter([
 	{
 		path: "/",
-		element: <AllTasks />,
+		element: <RootLayout />,
+		children: [
+			{
+				path: '/',
+				element: <AllTasks />
+			},
+			{
+				path: "/create",
+				element: <CreateTask />,
+			},
+			{
+				path: "/edit/:taskId",
+				element: <EditTask />,
+			},
+		]
 	},
 	{
-		path: "/create",
-		element: <CreateTask />,
-	},
-	{
-		path: "/edit/:taskId",
-		element: <EditTask />,
-	},
-	{
-		path: "/auth/login",
-		element: <Login />,
-	},
-	{
-		path: "/auth/register",
-		element: <Register />,
+		path: "/auth",
+		element: <RootAuthLayout />,
+		children: [
+			{
+				path: "login",
+				element: <Login />,
+			},
+			{
+				path: "register",
+				element: <Register />,
+			},
+		]
 	},
 ]);
 
@@ -33,7 +47,7 @@ const App = () => {
 	return (
 		<>
 			<RouterProvider router={router} />
-			<Toaster />
+			<Toaster position="bottom-center" />
 		</>
 	);
 };

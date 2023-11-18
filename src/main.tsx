@@ -1,14 +1,14 @@
 import ReactDOM from 'react-dom/client'
 import App from './App.tsx'
 import './index.css'
-import { ThemeContextProvider } from "./Providers/ThemeContextProviders.tsx";
+import UserContextProvider from "./Providers/UserProvider.tsx";
 import { Provider } from "react-redux";
 import store from './store.ts';
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
-    <ThemeContextProvider>
+    <UserContextProvider>
         <Provider store={store}>
             <App />
         </Provider>
-    </ThemeContextProvider>,
+    </UserContextProvider>,
 )
