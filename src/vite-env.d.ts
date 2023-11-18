@@ -15,3 +15,14 @@ interface UseSelectorStateType {
         tasks: TaskType[]
     }
 }
+
+interface LoginFormValues {
+    username: string,
+    password: string
+}
+
+interface RegisterFormValues {
+    username: string,
+    email: string,
+    password: string
+}

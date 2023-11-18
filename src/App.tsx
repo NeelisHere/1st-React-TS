@@ -1,9 +1,10 @@
-import ToggleTheme from "./components/ToggleTheme";
-import Counter from "./components/Counter";
 import AllTasks from "./components/AllTasks";
 import CreateTask from "./components/CreateTask";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import EditTask from "./components/EditTask";
+import Login from "./components/Login";
+import Register from "./components/Register";
+import { Toaster } from "react-hot-toast";
 
 const router = createBrowserRouter([
 	{
@@ -19,18 +20,21 @@ const router = createBrowserRouter([
 		element: <EditTask />,
 	},
 	{
-		path: "/counter",
-		element: <Counter />,
+		path: "/auth/login",
+		element: <Login />,
 	},
 	{
-		path: "/toggle-theme",
-		element: <ToggleTheme />,
+		path: "/auth/register",
+		element: <Register />,
 	},
 ]);
 
 const App = () => {
 	return (
-		<RouterProvider router={router} />
+		<>
+			<RouterProvider router={router} />
+			<Toaster />
+		</>
 	);
 };
 

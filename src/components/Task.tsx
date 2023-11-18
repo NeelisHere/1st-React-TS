@@ -1,23 +1,14 @@
-import { useMemo, MouseEvent } from 'react'
+import { MouseEvent, useMemo } from 'react'
 import { useDispatch } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 import { deleteTask } from '../slices/taskSlice'
+
 
 const Task = ({ task }: { task: TaskType }) => {
     const { id, title, isCompleted } = task
     const navigate = useNavigate()
     const dispatch = useDispatch()
 
-    const taskCardStyle = useMemo(() => ({
-        border: '2px solid black',
-        width: '500px',
-        margin: '0 auto',
-        padding: '10px',
-        display: 'flex',
-        gap: 24,
-        cursor: 'pointer'
-    }), [])
-    
     const buttonStyle = useMemo(() => ({
         padding: '0px 10px',
     }), [])
@@ -34,7 +25,7 @@ const Task = ({ task }: { task: TaskType }) => {
     }
 
     return (
-        <div style={taskCardStyle}>
+        <div >
             <input type="checkbox" checked={isCompleted} />
             <div>
                 <h5>id: { id }</h5>
