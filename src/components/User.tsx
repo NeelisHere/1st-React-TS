@@ -15,8 +15,9 @@ const User = () => {
             {
                 loggedInUser? 
                 <div>
-                    <p>{ loggedInUser.username }</p>
-                    <p>{ loggedInUser.email }</p> 
+                    <h3>Currently logged user</h3>
+                    <p><b><u>username</u>: </b>{ loggedInUser.username }</p>
+                    <p><b><u>email</u>: </b>{ loggedInUser.email }</p> 
                 </div>
                 : 
                 <p>Loading...</p>

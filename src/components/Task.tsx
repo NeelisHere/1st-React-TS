@@ -4,8 +4,8 @@ import { useNavigate } from 'react-router-dom'
 import { deleteTask } from '../slices/taskSlice'
 
 
-const Task = ({ task }: { task: TaskType }) => {
-    const { id, title, isCompleted } = task
+const Task = ({ task }: { task: FetchedTaskType }) => {
+    const { _id: id, title, isCompleted } = task
     const navigate = useNavigate()
     const dispatch = useDispatch()
 
@@ -24,8 +24,14 @@ const Task = ({ task }: { task: TaskType }) => {
         navigate(`/`)
     }
 
+    const taskBoxStyle = useMemo(() => ({
+        border: '2px solid green',
+        padding: '5px',
+        margin: '5px'
+    }), [])
+
     return (
-        <div >
+        <div style={taskBoxStyle}>
             <input type="checkbox" checked={isCompleted} />
             <div>
                 <h5>id: { id }</h5>

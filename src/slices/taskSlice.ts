@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
-const initialState: StateType = {
+const initialState: TaskStateType = {
     tasks: []
 }
 
@@ -8,26 +8,29 @@ const taskSlice = createSlice({
     name: 'tasks',
     initialState,
     reducers: {
-        addTask: (state: StateType, action: PayloadAction<TaskType>) => {
+        addTask: (state: TaskStateType, action: PayloadAction<FetchedTaskType>) => {
             state.tasks.push(action.payload)
             return state
         },
-        editTask: (state: StateType, action: PayloadAction<TaskType>) => {
+        fetchTasks: (state: TaskStateType, action: PayloadAction<FetchedTaskType[]>) => {
+            state.tasks = [...state.tasks, ...action.payload]
+            return state
+        },
+        editTask: (state: TaskStateType, action: PayloadAction<FetchedTaskType>) => {
             state.tasks.forEach((task) => {
-                if (task.id === action.payload.id) {
+                if (task._id === action.payload._id) {
                     task.title = action.payload.title
                     task.isCompleted = action.payload.isCompleted
                 }
             })
             return state
         },
-        deleteTask: (state: StateType, action: PayloadAction<string>) => ({
+        deleteTask: (state: TaskStateType, action: PayloadAction<string>) => ({
             ...state.tasks,
-            tasks: state.tasks.filter((task) => task.id !== action.payload)
+            tasks: state.tasks.filter((task) => task._id !== action.payload)
         }),
-
     }
 })
 
-export const { addTask, editTask, deleteTask } = taskSlice.actions
+export const { addTask, fetchTasks, editTask, deleteTask } = taskSlice.actions
 export default taskSlice

@@ -1,4 +1,4 @@
-import { useMemo, useState, useCallback } from "react"
+import { useMemo, useState, useCallback, MouseEvent } from "react"
 import toast from "react-hot-toast"
 import { NavLink, useNavigate } from 'react-router-dom'
 import authAPI from "../utils/authAPI"
@@ -16,7 +16,8 @@ const Navbar = () => {
         }
     }, [])
 
-    const handleLogout = async () => {
+    const handleLogout = async (e: MouseEvent<HTMLButtonElement, globalThis.MouseEvent>) => {
+        e.preventDefault()
         try {
             setLoading(true)
             const { data } = await authAPI.logoutAPI()
@@ -49,7 +50,7 @@ const Navbar = () => {
                 {
                     loading? <p>loading...</p> : <User />  
                 }
-                <button onClick={handleLogout}>Logout</button>
+                <button onClick={(e) => {handleLogout(e)}}>Logout</button>
             </div>
         </div>
     )

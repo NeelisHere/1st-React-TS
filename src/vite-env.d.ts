@@ -4,6 +4,7 @@ interface TaskType {
     readonly id: string,
     title: string,
     isCompleted: boolean
+    creator?: UserType
 } 
 
 interface StateType {
@@ -12,7 +13,8 @@ interface StateType {
 
 interface UseSelectorStateType {
     tasks: {
-        tasks: TaskType[]
+        // tasks: TaskType[]
+        tasks: FetchedTaskType[]
     }
 }
 
@@ -34,8 +36,33 @@ type UserType = {
 }
 
 interface UserContextType {
-    loggedInUser: UserType|null,
+    loggedInUser: UserType | null,
     setLoggedInUser: React.Dispatch<React.SetStateAction<UserType | null>>
 }
 
 type FlexDirection = "column" | "inherit" | "-moz-initial" | "initial" | "revert" | "unset" | "column-reverse" | "row" | "row-reverse" | undefined;
+
+interface TaskContextType {
+    myTasks: TaskType[] | null,
+    setMyTasks: React.Dispatch<React.SetStateAction<TaskType[] | null>>
+}
+
+interface CreatorType {
+    _id: string,
+    username: string,
+    email: string,
+    password: string,
+    __v: number
+}
+
+interface FetchedTaskType {
+    _id: string,
+    title: string,
+    isCompleted: boolean,
+    creator: CreatorType
+    __v: number,
+}
+
+interface TaskStateType {
+    tasks: FetchedTaskType[]
+} 

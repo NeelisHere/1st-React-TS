@@ -1,13 +1,15 @@
-import { useState, useMemo, FormEvent } from "react"
-import { nanoid } from 'nanoid'
-import { addTask } from "../slices/taskSlice"
+import { FormEvent, useMemo, useState } from "react";
+import toast from "react-hot-toast";
 import { useDispatch } from 'react-redux';
 import { useNavigate } from "react-router-dom";
+import { addTask } from "../slices/taskSlice";
+import axiosTaskService from '../utils/taskAPI';
 
 const CreateTask = () => {
     const [title, setTitle] = useState<string>('')
     const dispatch = useDispatch()
     const navigate = useNavigate()
+    const [loading, setLoading] = useState<boolean>(false)
 
     const formStyle = useMemo(() => ({
         width: '300px',
@@ -16,16 +18,20 @@ const CreateTask = () => {
         padding: '10px'
     }), [])
 
-    const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
+    const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault()
-        const payload: TaskType = {
-            id: nanoid(),
-            title,
-            isCompleted: false
+        if (!title) return;
+        try {
+            setLoading(true)
+            const { data } = await axiosTaskService.createTaskAPI({ title })
+            dispatch(addTask(data.task))
+            navigate('/')
+        } catch (error) {
+            console.log(error)
+            toast.error('Error creating task!')
+        } finally {
+            setLoading(true)
         }
-        // console.log(payload)
-        dispatch(addTask(payload))
-        navigate('/')
     }
 
     return (
@@ -37,6 +43,9 @@ const CreateTask = () => {
                     handleSubmit(e)
                 }}
             >
+                {
+                    loading? <>Loading...</> : null
+                }
                 <input 
                     type="text" 
                     value={title}
