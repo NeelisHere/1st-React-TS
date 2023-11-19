@@ -13,7 +13,7 @@ const taskSlice = createSlice({
             return state
         },
         fetchTasks: (state: TaskStateType, action: PayloadAction<FetchedTaskType[]>) => {
-            state.tasks = [...state.tasks, ...action.payload]
+            state.tasks = action.payload
             return state
         },
         editTask: (state: TaskStateType, action: PayloadAction<FetchedTaskType>) => {

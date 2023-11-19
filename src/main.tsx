@@ -7,11 +7,11 @@ import store from './store.ts';
 import TaskContextProvider from './Providers/TaskProvider.tsx';
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
-    <UserContextProvider>
         <Provider store={store}>
-            <TaskContextProvider>
-                <App />
-            </TaskContextProvider>
+            <UserContextProvider>
+                <TaskContextProvider>
+                    <App />
+                </TaskContextProvider>
+            </UserContextProvider>,
         </Provider>
-    </UserContextProvider>,
 )

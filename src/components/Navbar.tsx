@@ -1,12 +1,28 @@
-import { useMemo, useState, useCallback, MouseEvent } from "react"
+import { useMemo, useState, useCallback, MouseEvent, useEffect } from "react"
 import toast from "react-hot-toast"
 import { NavLink, useNavigate } from 'react-router-dom'
 import authAPI from "../utils/authAPI"
 import User from "./User"
+import { fetchTasks } from "../slices/taskSlice";
+import axiosTaskService from '../utils/taskAPI';
+import { useDispatch } from "react-redux"
+import { LoggedInUser } from "../Providers/UserProvider"
+
 
 const Navbar = () => {
     const [loading, setLoading] = useState<boolean>(false)
     const navigate = useNavigate()
+    const dispatch = useDispatch()
+    const { loggedInUser } = LoggedInUser()
+
+    const fetchTasksHandler = useCallback(async() => {
+        const { data: fetchedData } = await axiosTaskService.fetchTasksAPI();
+        dispatch(fetchTasks(fetchedData.tasks));
+    }, [dispatch, loggedInUser])
+
+    useEffect(() => {
+        fetchTasksHandler()
+    }, [dispatch, fetchTasksHandler])
 
     const navbarStyle = useMemo(() => {
         return { 

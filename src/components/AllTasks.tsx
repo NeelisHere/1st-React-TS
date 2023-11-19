@@ -2,10 +2,12 @@ import React, { useEffect, useMemo, useState } from "react"
 // import toast from "react-hot-toast"
 import { useSelector } from 'react-redux'
 import Task from "./Task"
+import useFetchAllTasks from "../hooks/useFetchAllTasks"
 
 const AllTasks = () => {
     const { tasks: tasksFromRedux } = useSelector((state: UseSelectorStateType) => state.tasks)
     const [tasks, setTasks] = useState<FetchedTaskType[]|null>(null)
+    useFetchAllTasks()
     // const [loading, setLoading] = useState<boolean>(false)
     useEffect(() => {
         setTasks(tasksFromRedux);
