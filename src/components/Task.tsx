@@ -2,6 +2,8 @@ import { MouseEvent, useMemo } from 'react'
 import { useDispatch } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 import { deleteTask } from '../slices/taskSlice'
+import axiosTaskService from '../utils/taskAPI'
+import toast from 'react-hot-toast'
 
 
 const Task = ({ task }: { task: FetchedTaskType }) => {
@@ -15,13 +17,25 @@ const Task = ({ task }: { task: FetchedTaskType }) => {
 
     const handleEditButton = (e: MouseEvent<HTMLButtonElement, globalThis.MouseEvent>) => {
         e.preventDefault()
-        navigate(`/edit/${id}`)
+        try {
+            navigate(`/edit/${id}`)
+        } catch (error) {
+            console.log(error)
+            toast.error('Error deleting task!')
+        }
     }
 
-    const handleDeleteButton = (e: MouseEvent<HTMLButtonElement, globalThis.MouseEvent>) => {
+    const handleDeleteButton = async (e: MouseEvent<HTMLButtonElement, globalThis.MouseEvent>) => {
         e.preventDefault()
-        dispatch(deleteTask(id))
-        navigate(`/`)
+        try {
+            await axiosTaskService.deleteTaskAPI(id)
+            dispatch(deleteTask(id))
+            navigate(`/`)
+            toast.success('Task deleted successfully!')
+        } catch (error) {
+            console.log(error)
+            toast.error('Error deleting task!')
+        }
     }
 
     const taskBoxStyle = useMemo(() => ({

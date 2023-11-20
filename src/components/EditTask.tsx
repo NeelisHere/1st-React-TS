@@ -1,24 +1,38 @@
-import { useNavigate, useParams } from "react-router-dom"
-import { useState, useEffect, ChangeEvent, FormEvent } from 'react'
+import { ChangeEvent, FormEvent, useEffect, useState } from 'react'
+import toast from "react-hot-toast"
 import { useDispatch, useSelector } from "react-redux"
+import { useNavigate, useParams } from "react-router-dom"
 import { editTask } from "../slices/taskSlice"
+import axiosTaskService from '../utils/taskAPI'
 
 const EditTask = () => {
     const { tasks: tasksFromRedux } = useSelector((state: UseSelectorStateType) => state.tasks)
-    const [task, setTask] = useState<TaskType | null>(null)
+    const [task, setTask] = useState<FetchedTaskType | null>(null)
     const { taskId } = useParams()
     const dispatch = useDispatch()
     const navigation = useNavigate()
 
     useEffect(() => {
-        const taskToBeEdited = tasksFromRedux.filter((t) => t.id === taskId)[0]
-        setTask(taskToBeEdited);
-    }, [taskId, tasksFromRedux]);
+        if (task === null) {
+            const taskToBeEdited = tasksFromRedux.filter((task) => task._id === taskId)[0]
+            setTask(taskToBeEdited);
+            return () => {}
+        }
+    }, [task, taskId, tasksFromRedux]);
 
-    const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
+    const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault()
-        dispatch(editTask(task!))
-        navigation('/')
+        try {
+            await axiosTaskService.editTaskAPI(taskId!, { 
+                title: task?.title, isCompleted:task?.isCompleted 
+            })
+            dispatch(editTask(task!))
+            navigation('/')
+            toast.success('Task updated successfully!')
+        } catch (error) {
+            console.log(error)
+            toast.error('Error updating task!')
+        }
     }
 
     return !task?

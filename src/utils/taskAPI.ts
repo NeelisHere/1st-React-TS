@@ -7,6 +7,14 @@ class AxiosTaskService {
     async fetchTasksAPI() {
         return api.get('/tasks/all')
     }
+    async deleteTaskAPI(taskId: string) {
+        return api.delete(`/tasks/delete/${taskId}`)
+    }
+    async editTaskAPI(
+        taskId: string, 
+        payload: { title: string|undefined, isCompleted: boolean|undefined }) {
+        return api.put(`/tasks/edit/${taskId}`, payload)
+    }
 }
 
 export default new AxiosTaskService()
